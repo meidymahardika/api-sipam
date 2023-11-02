@@ -1,92 +1,17 @@
-const express = require('express')
+const express = require("express")
 const app = express()
-const bodyParser = require('body-parser')
-const pool = require('./connection')
-const response = require('./response')
 
-app.use(bodyParser.json())
+require('dotenv').config()
 
-app.get('/', (req, res) => {
-  response(200, "Hello World!", "Success", res)
-})
+app.use(express.urlencoded({extended: false}))
+app.use(express.json())
 
-// app.get('/find', (req, res) => {
-//   const sql = `SELECT nama FROM mahasiswa WHERE nim = ${req.query.nim}`
-//   pool.query(sql, (error, result) => {
-//     response(200, result, "find mahasiswa name", res)
-//   })
-// })
+const productRouter = require('./routes/product.router')
 
-// app.post('/login', (req, res) => {
-//     console.log({ requset: res.body });
-//     res.send('success')
-// })
+app.use("/api/product", productRouter)
 
-app.get('/api/product', (req, res) => {
-  const sql = "SELECT * FROM product"
-  pool.query(sql, (err, fields) => {
-    if(err) throw err
-    response(200, fields, "get all data from product", res)
-  })
-})
+const PORT = process.env.PORT || 5000
 
-app.get('/mahasiswa/:nim', (req, res) => {
-  const nim = req.params.nim
-  const sql = `SELECT * FROM mahasiswa WHERE nim = ${nim}`
-  pool.query(sql, (err, fields) => {
-    if(err) throw err
-    response(200, fields, "get data mahasiswa by nim", res)
-  })
-})
-
-app.post('/mahasiswa', (req, res) => {
-  const { nim, nama, kelas, alamat } = req.body
-  const sql = `INSERT INTO mahasiswa (nim, nama, kelas, alamat) VALUES (${nim}, '${nama}', '${kelas}', '${alamat}')`
-  pool.query(sql, (err, fields) => {
-    if(err) response(500, "invalid", "error", res)
-    if(fields?.affectedRows) {
-      const data = {
-        isSuccess: fields.affectedRows,
-        id: fields.insertId
-      }
-      response(200, data, "Data Created Successfuly", res)
-    }
-  })
-})
-
-app.put('/', (req, res) => {
-  const { nim, nama, kelas, alamat } = req.body
-  const sql = `UPDATE mahasiswa SET nama = '${nama}',kelas = '${kelas}',alamat = '${alamat}' WHERE nim = ${nim}`
-  pool.query(sql, (err, fields) => {
-    if(err) response(500, "invalid", "error", res)
-    if(fields?.affectedRows) {
-      const data = {
-        isSuccess: fields.affectedRows,
-        message: fields.message
-      }
-      response(200, data, "Data Updated Successfuly", res)
-    } else {
-      response(404, "User not found", "Error", res)
-    }
-  })
-})
-
-app.delete('/', (req, res) => {
-  const { nim, nama, kelas, alamat } = req.body
-  const sql = `DELETE FROM mahasiswa WHERE nim = ${nim}`
-  pool.query(sql, (err, fields) => {
-    if(err) response(500, "invalid", "error", res)
-    if(fields?.affectedRows) {
-      const data = {
-        isSuccess: fields.affectedRows
-      }
-      response(200, data, "Data Deleted Successfuly", res)
-    } else {
-      response(404, "User not found", "Error", res)
-    }
-  })
-})
-
-app.listen(process.env.PORT, () => {
-  console.log(`Example app listening on port ${process.env.PORT}`)
+app.listen(PORT, () => {
+    console.log("Server is running....")
 })
