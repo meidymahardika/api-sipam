@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const port = 3005
 const bodyParser = require('body-parser')
 const db = require('./connection')
 const response = require('./response')
@@ -88,6 +87,6 @@ app.delete('/', (req, res) => {
   })
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`)
 })
