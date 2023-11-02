@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const db = require('./connection')
+const pool = require('./connection')
 const response = require('./response')
 
 app.use(bodyParser.json())
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 // app.get('/find', (req, res) => {
 //   const sql = `SELECT nama FROM mahasiswa WHERE nim = ${req.query.nim}`
-//   db.query(sql, (error, result) => {
+//   pool.query(sql, (error, result) => {
 //     response(200, result, "find mahasiswa name", res)
 //   })
 // })
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/product', (req, res) => {
   const sql = "SELECT * FROM product"
-  db.query(sql, (err, fields) => {
+  pool.query(sql, (err, fields) => {
     if(err) throw err
     response(200, fields, "get all data from product", res)
   })
@@ -33,7 +33,7 @@ app.get('/api/product', (req, res) => {
 app.get('/mahasiswa/:nim', (req, res) => {
   const nim = req.params.nim
   const sql = `SELECT * FROM mahasiswa WHERE nim = ${nim}`
-  db.query(sql, (err, fields) => {
+  pool.query(sql, (err, fields) => {
     if(err) throw err
     response(200, fields, "get data mahasiswa by nim", res)
   })
@@ -42,7 +42,7 @@ app.get('/mahasiswa/:nim', (req, res) => {
 app.post('/mahasiswa', (req, res) => {
   const { nim, nama, kelas, alamat } = req.body
   const sql = `INSERT INTO mahasiswa (nim, nama, kelas, alamat) VALUES (${nim}, '${nama}', '${kelas}', '${alamat}')`
-  db.query(sql, (err, fields) => {
+  pool.query(sql, (err, fields) => {
     if(err) response(500, "invalid", "error", res)
     if(fields?.affectedRows) {
       const data = {
@@ -57,7 +57,7 @@ app.post('/mahasiswa', (req, res) => {
 app.put('/', (req, res) => {
   const { nim, nama, kelas, alamat } = req.body
   const sql = `UPDATE mahasiswa SET nama = '${nama}',kelas = '${kelas}',alamat = '${alamat}' WHERE nim = ${nim}`
-  db.query(sql, (err, fields) => {
+  pool.query(sql, (err, fields) => {
     if(err) response(500, "invalid", "error", res)
     if(fields?.affectedRows) {
       const data = {
@@ -74,7 +74,7 @@ app.put('/', (req, res) => {
 app.delete('/', (req, res) => {
   const { nim, nama, kelas, alamat } = req.body
   const sql = `DELETE FROM mahasiswa WHERE nim = ${nim}`
-  db.query(sql, (err, fields) => {
+  pool.query(sql, (err, fields) => {
     if(err) response(500, "invalid", "error", res)
     if(fields?.affectedRows) {
       const data = {
