@@ -8,9 +8,25 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "moment": "^2.29.4",
+    "multer": "^1.4.5-lts.1",
     "mysql2": "^2.3.3",
     "nodemon": "^3.0.1"
-  }
+  },
+  "name": "api-sipam",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meidymahardika/api-sipam.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meidymahardika/api-sipam/issues"
+  },
+  "homepage": "https://github.com/meidymahardika/api-sipam#readme",
+  "description": ""
 }
