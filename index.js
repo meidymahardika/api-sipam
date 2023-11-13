@@ -1,6 +1,6 @@
 const express = require("express")
 const cors = require('cors')
-const { dirname } = require('path')
+// const { dirname } = require('path')
 
 const app = express()
 app.use(cors())
@@ -15,7 +15,7 @@ const categoryProductRouter = require('./routes/categoryProduct.router')
 
 app.use("/api/product", productRouter)
 app.use("/api/category-product", categoryProductRouter)
-app.use("/img", express.static(dirname(require?.main?.filename) + '/img'))
+// app.use("/img", express.static(dirname(require?.main?.filename) + '/img'))
 
 const PORT = process.env.PORT || 5000
 
