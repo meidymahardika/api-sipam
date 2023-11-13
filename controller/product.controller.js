@@ -47,7 +47,6 @@ const productController = {
             });
             
             const payload = { data: arr }
-            console.log(1, rows);
             response(200, payload, "SUCCESS", res)
         } catch (error) {
             console.log(error)
