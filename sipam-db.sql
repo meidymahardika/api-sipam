@@ -106,17 +106,17 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `name`, `price`, `img`, `desc`, `is_active`, `created_date`, `updated_date`) VALUES
-(2, 'Nasi Goreng', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(3, 'Noodles', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(4, 'Pasta', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(5, 'Bread', 10000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(6, 'Coffee', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(7, 'Tea', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(8, 'Iced Tea', 5000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(9, 'Syrup', 10000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(10, 'Juice', 5000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
-(11, 'Milk', 7000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29');
+INSERT INTO `product` (`id`, `id_category_product`, `name`, `price`, `img`, `desc`, `is_active`, `created_date`, `updated_date`) VALUES
+(2, 1, 'Nasi Goreng', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(3, 1, 'Noodles', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(4, 1, 'Pasta', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(5, 1, 'Bread', 10000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(6, 3, 'Coffee', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(7, 3, 'Tea', 15000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(8, 3, 'Iced Tea', 5000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(9, 3, 'Syrup', 10000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(10, 3, 'Juice', 5000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29'),
+(11, 3, 'Milk', 7000, 'test', 'Lorem Ipsum Dolor', 1, '2023-10-29', '2023-10-29');
 
 --
 -- Indexes for dumped tables

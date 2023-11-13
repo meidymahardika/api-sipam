@@ -1,13 +1,15 @@
 const express = require("express")
 const router = express.Router()
-const upload = require('../utils/upload')
+
+const { upload } = require('../utils/multer')
+const { getStorage ,ref ,uploadBytesResumable } = require('firebase/storage')
 
 const productController = require("../controller/product.controller")
 
-router.get("/", productController.getAll)
+router.get("/", productController.getByCategory)
 router.get("/list", productController.getList)
 // router.get("/:id", productController.getById)
-router.post("/", upload.array("files"), productController.add)
+router.post("/", productController.add)
 // router.put("/:id", productController.update)
 // router.delete("/:id", productController.delete)
 
