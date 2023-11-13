@@ -93,39 +93,39 @@ const productController = {
     //         })
     //     }
     // },
-    add: async (req, res) => {
-        try {
-            const dateTime = Date.now();
+    // add: async (req, res) => {
+    //     try {
+    //         const dateTime = Date.now();
 
-            const storageRef = ref(storage, `files/${dateTime}`);
+    //         const storageRef = ref(storage, `files/${dateTime}`);
 
-            // Create file metadata including the content type
-            const metadata = {
-                contentType: req.file.mimetype,
-            };
+    //         // Create file metadata including the content type
+    //         const metadata = {
+    //             contentType: req.file.mimetype,
+    //         };
 
-            // Upload the file in the bucket storage
-            const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
-            //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
+    //         // Upload the file in the bucket storage
+    //         const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+    //         //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
 
-            // Grab the public url
-            const downloadURL = await getDownloadURL(snapshot.ref);
-            console.log(99, downloadURL.split("&")[1]);
-            const { name, price, description } = req.body
+    //         // Grab the public url
+    //         const downloadURL = await getDownloadURL(snapshot.ref);
+    //         console.log(99, downloadURL.split("&")[1]);
+    //         const { name, price, description } = req.body
 
-            // const sql = "insert into posts (title, content) values (?, ?)"
-            const sql = `INSERT INTO product(name, price, img, description, is_active, created_date, updated_date) VALUES ('${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${1}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
-            const [rows, fields] = await pool.query(sql, [name, price, downloadURL, description])
-            res.json({
-                data: rows
-            })
-        } catch (error) {
-            console.log(error)
-            res.json({
-                status: "error"
-            })
-        }
-    },
+    //         // const sql = "insert into posts (title, content) values (?, ?)"
+    //         const sql = `INSERT INTO product(name, price, img, description, is_active, created_date, updated_date) VALUES ('${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${1}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
+    //         const [rows, fields] = await pool.query(sql, [name, price, downloadURL, description])
+    //         res.json({
+    //             data: rows
+    //         })
+    //     } catch (error) {
+    //         console.log(error)
+    //         res.json({
+    //             status: "error"
+    //         })
+    //     }
+    // },
     // update: async (req, res) => {
     //     try {
     //         const { title, content } = req.body
