@@ -15,7 +15,7 @@ const categoryProductRouter = require('./routes/categoryProduct.router')
 
 app.use("/api/product", productRouter)
 app.use("/api/category-product", categoryProductRouter)
-app.use("/img", express.static(dirname(require.main.filename) + '/img'))
+app.use("/img", express.static(dirname(require?.main?.filename) + '/img'))
 
 const PORT = process.env.PORT || 5000
 
