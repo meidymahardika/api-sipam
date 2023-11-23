@@ -93,7 +93,7 @@ const categoryProductController = {
     delete: async (req, res) => {
         try {
             const { id } = req.params
-            const [rows, fields] = await pool.query("delete from category_product where id = ?", [id])
+            const [rows, fields] = await pool.query(`DELETE FROM category_product WHERE id = ${id}`)
             res.json({
                 data: rows
             })
