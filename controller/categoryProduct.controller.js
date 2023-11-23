@@ -45,20 +45,6 @@ const categoryProductController = {
             })
         }
     },
-    // getById: async (req, res) => {
-    //     try {
-    //         const { id } = req.params
-    //         const [rows, fields] = await pool.query("select * from posts where id = ?", [id])
-    //         res.json({
-    //             data: rows
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //         res.json({
-    //             status: "error"
-    //         })
-    //     }
-    // },
     add: async (req, res) => {
       const { name } = req.body
       try {
@@ -93,7 +79,7 @@ const categoryProductController = {
     delete: async (req, res) => {
         try {
             const { id } = req.params
-            const [rows, fields] = await pool.query(`DELETE FROM category_product WHERE id = ${id}`)
+            const [rows, fields] = await pool.query("delete from category_product where id = ?", [id])
             res.json({
                 data: rows
             })
