@@ -26,7 +26,7 @@ const categoryProductController = {
             const { page, perpage } = req.query
             const pageNumber = (page-1)*perpage
             const [rows, fields] = await pool.query(`SELECT * FROM category_product LIMIT ${perpage} OFFSET ${pageNumber}`)
-            const [total_rows, total_fields] = await pool.query(`SELECT COUNT(*) AS total_rows FROM product`)
+            const [total_rows, total_fields] = await pool.query(`SELECT COUNT(*) AS total_rows FROM category_product`)
             const total = total_rows[0].total_rows
             const payload = { 
                 data: rows, 
