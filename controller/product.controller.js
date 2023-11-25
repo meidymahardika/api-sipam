@@ -59,7 +59,7 @@ const productController = {
         try {
             const { page, perpage } = req.query
             const pageNumber = (page-1)*perpage
-            const [rows, fields] = await pool.query(`SELECT * FROM product LIMIT ${perpage} OFFSET ${pageNumber}`)
+            const [rows, fields] = await pool.query(`SELECT category_product.name AS category_name, product.* FROM category_product JOIN product ON category_product.id = product.id_category_product LIMIT ${perpage} OFFSET ${pageNumber}`)
             const [total_rows, total_fields] = await pool.query(`SELECT COUNT(*) AS total_rows FROM product`)
             const total = total_rows[0].total_rows
             const payload = { 
@@ -110,10 +110,10 @@ const productController = {
 
             // Grab the public url
             const downloadURL = await getDownloadURL(snapshot.ref);
-            const { id_category_product, name, price, description } = req.body
+            const { id_category_product, name, price, description, isActive } = req.body
 
-            const sql = `INSERT INTO product(id_category_product, name, price, img, description, is_active, created_date, updated_date) VALUES ('${id_category_product}', '${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${1}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
-            const [rows, fields] = await pool.query(sql, [id_category_product, name, price, downloadURL, description])
+            const sql = `INSERT INTO product(id_category_product, name, price, img, description, is_active, created_date, updated_date) VALUES ('${id_category_product}', '${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${isActive}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
+            const [rows, fields] = await pool.query(sql, [id_category_product, name, price, downloadURL, description, isActive])
             res.json({
                 data: rows
             })
