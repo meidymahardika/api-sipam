@@ -110,10 +110,10 @@ const productController = {
 
             // Grab the public url
             const downloadURL = await getDownloadURL(snapshot.ref);
-            const { id_category_product, name, price, description, isActive } = req.body
+            const { idCategoryProduct, name, price, description, isActive } = req.body
 
-            const sql = `INSERT INTO product(id_category_product, name, price, img, description, is_active, created_date, updated_date) VALUES ('${id_category_product}', '${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${isActive}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
-            const [rows, fields] = await pool.query(sql, [id_category_product, name, price, downloadURL, description, isActive])
+            const sql = `INSERT INTO product(id_category_product, name, price, img, description, is_active, created_date, updated_date) VALUES ('${idCategoryProduct}', '${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${isActive}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
+            const [rows, fields] = await pool.query(sql, [idCategoryProduct, name, price, downloadURL, description, isActive])
             res.json({
                 data: rows
             })
