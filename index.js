@@ -1,14 +1,15 @@
 const express = require("express")
 const cors = require('cors')
 // const { dirname } = require('path')
+// const bodyParser = require('body-parser');
 
 const app = express()
 app.use(cors())
 
 require('dotenv').config()
 
-app.use(express.urlencoded({extended: false}))
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const productRouter = require('./routes/product.router')
 const categoryProductRouter = require('./routes/categoryProduct.router')
