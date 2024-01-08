@@ -96,6 +96,7 @@ const productController = {
 
             // Grab the public url
             const downloadURL = await getDownloadURL(snapshot.ref);
+
             const { idCategoryProduct, name, price, description, isActive } = req.body
 
             const sql = `INSERT INTO product(id_category_product, name, price, img, description, is_active, created_date, updated_date) VALUES ('${idCategoryProduct}', '${name}', ${price}, '${dateTime}_${downloadURL.split("&")[1]}', '${description}', ${isActive}, '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
@@ -126,22 +127,43 @@ const productController = {
             })
         }
     }, 
-    // update: async (req, res) => {
-    //     try {
-    //         const { title, content } = req.body
-    //         const { id } = req.params
-    //         const sql = "update posts set title = ?, content = ? where id = ?"
-    //         const [rows, fields] = await pool.query(sql, [title, content, id])
-    //         res.json({
-    //             data: rows
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //         res.json({
-    //             status: "error"
-    //         })
-    //     }
-    // }, 
+    update: async (req, res) => {
+        try {
+            const dateTime = Date.now();
+            
+            if(req.file){
+                const storageRef = ref(storage, `files/${dateTime}`);
+    
+                // Create file metadata including the content type
+                const metadata = {
+                    contentType: req.file.mimetype,
+                };
+    
+                // Upload the file in the bucket storage
+                const snapshot = await uploadBytesResumable(storageRef, req.file.buffer, metadata);
+                //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
+    
+                // Grab the public url
+                const downloadURL = await getDownloadURL(snapshot.ref);
+            }
+            
+            const { idCategoryProduct, name, price, description, isActive, id } = req.body
+            const sql = 
+                req.file ? 
+                    `update product set id_category_product = '${idCategoryProduct}', name = '${name}', price = '${price}', img = '${dateTime}_${downloadURL.split("&")[1]}', description = '${description}', is_active = ${isActive}, updated_date = '${moment().format('YYYY-MM-DD')}' where id = ${id}`
+                :
+                    `update product set id_category_product = '${idCategoryProduct}', name = '${name}', price = '${price}', description = '${description}', is_active = ${isActive}, updated_date = '${moment().format('YYYY-MM-DD')}' where id = ${id}`
+            const [rows, fields] = await pool.query(sql, [idCategoryProduct, name, price, description, isActive, id])
+            res.json({
+                data: rows
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    },
     // delete: async (req, res) => {
     //     try {
     //         const { id } = req.params
