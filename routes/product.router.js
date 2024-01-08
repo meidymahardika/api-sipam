@@ -8,8 +8,8 @@ const productController = require("../controller/product.controller")
 
 router.get("/", productController.getByCategory)
 router.get("/list", productController.getList)
-// router.get("/:id", productController.getById)
 router.post("/", upload, productController.add)
+router.put("/update-status/:id", productController.updateStatus)
 // router.put("/:id", productController.update)
 // router.delete("/:id", productController.delete)
 

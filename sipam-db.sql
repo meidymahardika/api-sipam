@@ -34,6 +34,7 @@ CREATE TABLE `order` (
   `name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(20) NOT NULL,
+  `payment_method` int NOT NULL,
   `total` int(11) NOT NULL,
   `status` enum('NEW_ORDER','WAITING','PAID','DONE','CANCEL') NOT NULL,
   `created_at` date NOT NULL,

@@ -79,20 +79,6 @@ const productController = {
             })
         }
     },
-    // getById: async (req, res) => {
-    //     try {
-    //         const { id } = req.params
-    //         const [rows, fields] = await pool.query("select * from posts where id = ?", [id])
-    //         res.json({
-    //             data: rows
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //         res.json({
-    //             status: "error"
-    //         })
-    //     }
-    // },
     add: async (req, res) => {
         try {
             const dateTime = Date.now();
@@ -124,6 +110,22 @@ const productController = {
             })
         }
     },
+    updateStatus: async (req, res) => {
+        try {
+            const { status } = req.body
+            const { id } = req.params
+            const sql = `update product set is_active = '${status}' where id = ${id}`
+            const [rows, fields] = await pool.query(sql, [status, id])
+            res.json({
+                data: rows
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    }, 
     // update: async (req, res) => {
     //     try {
     //         const { title, content } = req.body
