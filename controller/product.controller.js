@@ -130,7 +130,6 @@ const productController = {
     update: async (req, res) => {
         try {
             const dateTime = Date.now();
-            
             if(req.file){
                 const storageRef = ref(storage, `files/${dateTime}`);
     
@@ -145,18 +144,23 @@ const productController = {
     
                 // Grab the public url
                 const downloadURL = await getDownloadURL(snapshot.ref);
+
+                const { idCategoryProduct, name, price, description, isActive, id } = req.body
+                const sql = `update product set id_category_product = '${idCategoryProduct}', name = '${name}', price = '${price}', img = '${dateTime}_${downloadURL.split("&")[1]}', description = '${description}', is_active = ${isActive}, updated_date = '${moment().format('YYYY-MM-DD')}' where id = ${id}`
+                const [rows, fields] = await pool.query(sql, [idCategoryProduct, name, price, downloadURL, description, isActive, id])
+                    
+                res.json({
+                    data: rows
+                })
+            }else{
+                const { idCategoryProduct, name, price, description, isActive, id } = req.body
+                const sql = `update product set id_category_product = '${idCategoryProduct}', name = '${name}', price = '${price}', description = '${description}', is_active = ${isActive}, updated_date = '${moment().format('YYYY-MM-DD')}' where id = ${id}`
+                const [rows, fields] = await pool.query(sql, [idCategoryProduct, name, price, description, isActive, id])
+                    
+                res.json({
+                    data: rows
+                })
             }
-            
-            const { idCategoryProduct, name, price, description, isActive, id } = req.body
-            const sql = 
-                req.file ? 
-                    `update product set id_category_product = '${idCategoryProduct}', name = '${name}', price = '${price}', img = '${dateTime}_${downloadURL.split("&")[1]}', description = '${description}', is_active = ${isActive}, updated_date = '${moment().format('YYYY-MM-DD')}' where id = ${id}`
-                :
-                    `update product set id_category_product = '${idCategoryProduct}', name = '${name}', price = '${price}', description = '${description}', is_active = ${isActive}, updated_date = '${moment().format('YYYY-MM-DD')}' where id = ${id}`
-            const [rows, fields] = await pool.query(sql, [idCategoryProduct, name, price, description, isActive, id])
-            res.json({
-                data: rows
-            })
         } catch (error) {
             console.log(error)
             res.json({
