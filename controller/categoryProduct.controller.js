@@ -1,9 +1,7 @@
 const pool = require("../database/index")
-const moment = require('moment')
 const response = require('../utils/response')
 
-const { getStorage, ref, getDownloadURL, uploadBytesResumable } = require('firebase/storage')
-const { signInWithEmailAndPassword } = require("firebase/auth");
+const { getStorage } = require('firebase/storage')
 const { auth } = require('../config/firebase.config')
 
 const storage = getStorage();
