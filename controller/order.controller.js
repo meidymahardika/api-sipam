@@ -94,6 +94,20 @@ const orderController = {
             })
         }
     },
+    getDetailOrder: async (req, res) => {
+        try {
+            const { id } = req.params
+            const [rows, fields] = await pool.query(`SELECT product.* , order_detail.* FROM product JOIN order_detail ON product.id = order_detail.id_product WHERE id_order = ${id}`)
+            res.json({
+                data: rows
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    }
 }
 
 module.exports = orderController
