@@ -123,7 +123,41 @@ const orderController = {
                 status: "error"
             })
         }
-    }, 
+    },
+    updateStatusDone: async (req, res) => {
+        try {
+            const { idOrder, orderNumber, name, email, phone, paymentMethod, total } = req.body
+            const sql = `INSERT INTO report(id_order, order_number, name, email, phone, payment_method, total, status, created_at, updated_at) VALUES (${idOrder}, '${orderNumber}', '${name}', '${email}', '${phone}', ${paymentMethod}, ${total}, 'DONE', '${moment().format('YYYY-MM-DD HH:mm:ss')}', '${moment().format('YYYY-MM-DD HH:mm:ss')}')`
+            const [rows, fields] = await pool.query(sql, [idOrder, orderNumber, name, email, phone, paymentMethod, total])
+            const sqlDelete = `delete from tb_order where id = ${idOrder}`
+            await pool.query(sqlDelete, [idOrder])
+            res.json({
+                data: rows
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    },
+    updateStatusReject: async (req, res) => {
+        try {
+            const { idOrder, orderNumber, name, email, phone, paymentMethod, total } = req.body
+            const sql = `INSERT INTO report(id_order, order_number, name, email, phone, payment_method, total, status, created_at, updated_at) VALUES (${idOrder}, '${orderNumber}', '${name}', '${email}', '${phone}', ${paymentMethod}, ${total}, 'REJECTED', '${moment().format('YYYY-MM-DD HH:mm:ss')}', '${moment().format('YYYY-MM-DD HH:mm:ss')}')`
+            const [rows, fields] = await pool.query(sql, [idOrder, orderNumber, name, email, phone, paymentMethod, total])
+            const sqlDelete = `delete from tb_order where id = ${idOrder}`
+            await pool.query(sqlDelete, [idOrder])
+            res.json({
+                data: rows
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    },
 }
 
 module.exports = orderController
