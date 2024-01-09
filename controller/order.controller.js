@@ -7,8 +7,6 @@ const orderController = {
         try {
             const { orderNumber, queue, name, email, phone, paymentMethod, total } = req.body
 
-            console.log(1, req.body);
-
             const sql = `INSERT INTO tb_order(order_number, queue, name, email, phone, payment_method, total, status, created_at, updated_at) VALUES ('${orderNumber}', ${queue}, '${name}', '${email}', '${phone}', ${paymentMethod}, ${total}, 'WAITING', '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
             await pool.query(sql, [orderNumber, queue, name, email, phone, paymentMethod, total], (err, result) => {
                 if (err) {
@@ -16,7 +14,6 @@ const orderController = {
                     return res.status(500).send('Error inserting data');
                 }
             
-                console.log('Data inserted successfully');
                 res.json({
                     data: result
                 })
@@ -49,8 +46,8 @@ const orderController = {
         try {
             const { page, perpage } = req.query
             const pageNumber = (page-1)*perpage
-            const [rows, fields] = await pool.query(`SELECT product.*, order_detail.* FROM product JOIN order_detail ON product.id = order_detail.id_product LIMIT ${perpage} OFFSET ${pageNumber}`)
-            const [total_rows, total_fields] = await pool.query(`SELECT COUNT(*) AS total_rows FROM product`)
+            const [rows, fields] = await pool.query(`SELECT * FROM tb_order LIMIT ${perpage} OFFSET ${pageNumber}`)
+            const [total_rows, total_fields] = await pool.query(`SELECT COUNT(*) AS total_rows FROM tb_order`)
             const total = total_rows[0].total_rows
             const payload = { 
                 data: rows, 
