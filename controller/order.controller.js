@@ -80,7 +80,7 @@ const orderController = {
             })
         }
     },
-    getQueue: async (req, res) => {
+    getNextQueue: async (req, res) => {
         try {
             const [rows, fields] = await pool.query(`SELECT MIN(queue) AS next_queue FROM tb_order WHERE status = 'WAITING';`)
             const payload = { 

@@ -6,6 +6,6 @@ const orderController = require("../controller/order.controller")
 router.post("/", orderController.add)
 router.get("/list", orderController.getList)
 router.get("/queue", orderController.getQueue)
-router.get("/next-queue", orderController.getQueue)
+router.get("/next-queue", orderController.getNextQueue)
 
 module.exports = router
