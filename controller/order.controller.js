@@ -98,9 +98,10 @@ const orderController = {
         try {
             const { id } = req.params
             const [rows, fields] = await pool.query(`SELECT product.* , order_detail.* FROM product JOIN order_detail ON product.id = order_detail.id_product WHERE id_order = ${id}`)
-            res.json({
+            const payload = { 
                 data: rows
-            })
+            }
+            response(200, payload, "SUCCESS", res)
         } catch (error) {
             console.log(error)
             res.json({
