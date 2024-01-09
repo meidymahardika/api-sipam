@@ -108,7 +108,22 @@ const orderController = {
                 status: "error"
             })
         }
-    }
+    },
+    updateStatusPaid: async (req, res) => {
+        try {
+            const { id } = req.params
+            const sql = `update tb_order set status = 'PAID' where id = ${id}`
+            const [rows, fields] = await pool.query(sql, [id])
+            res.json({
+                data: rows
+            })
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    }, 
 }
 
 module.exports = orderController
