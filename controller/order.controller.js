@@ -69,6 +69,23 @@ const orderController = {
             })
         }
     },
+    getQueue: async (req, res) => {
+        try {
+            const { page, perpage } = req.query
+            const pageNumber = (page-1)*perpage
+            const [rows, fields] = await pool.query('SELECT MAX(queue) AS max_queue FROM tb_order;')
+            console.log(12, rows);
+            const payload = { 
+                data: rows
+            }
+            response(200, payload, "SUCCESS", res)
+        } catch (error) {
+            console.log(error)
+            res.json({
+                status: "error"
+            })
+        }
+    },
 }
 
 module.exports = orderController

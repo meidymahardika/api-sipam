@@ -47,7 +47,7 @@ INSERT INTO `category_product` (`id`, `name`) VALUES
 -- Table structure for table `order`
 --
 
-CREATE TABLE `order` (
+CREATE TABLE `tb_order` (
   `id` int(11) NOT NULL,
   `order_number` varchar(20) NOT NULL,
   `queue` int(11) NOT NULL,
