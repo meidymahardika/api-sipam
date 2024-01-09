@@ -7,7 +7,7 @@ const orderController = {
         try {
             const { orderNumber, queue, name, email, phone, paymentMethod, total } = req.body
 
-            const sql = `INSERT INTO tb_order(order_number, queue, name, email, phone, payment_method, total, status, created_at, updated_at) VALUES ('${orderNumber}', ${queue}, '${name}', '${email}', '${phone}', ${paymentMethod}, ${total}, 'WAITING', '${moment().format('YYYY-MM-DD')}', '${moment().format('YYYY-MM-DD')}')`;
+            const sql = `INSERT INTO tb_order(order_number, queue, name, email, phone, payment_method, total, status, created_at, updated_at) VALUES ('${orderNumber}', ${queue}, '${name}', '${email}', '${phone}', ${paymentMethod}, ${total}, 'WAITING', '${moment().format('YYYY-MM-DD HH:mm:ss')}', '${moment().format('YYYY-MM-DD HH:mm:ss')}')`;
             await pool.query(sql, [orderNumber, queue, name, email, phone, paymentMethod, total], (err, result) => {
                 if (err) {
                     console.error('Error inserting: ', err);
