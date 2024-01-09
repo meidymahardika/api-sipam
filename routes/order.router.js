@@ -12,6 +12,4 @@ router.put("/update-status-paid/:id", orderController.updateStatusPaid)
 router.post("/update-status-done", orderController.updateStatusDone)
 router.post("/update-status-reject", orderController.updateStatusReject)
 
-
-
 module.exports = router
